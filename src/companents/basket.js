@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {addToBasket, DecreaseToBasket, RemoveProductBasket} from "../redux/action/action";
+import {addToBasket, DecreaseToBasket, getProdList, RemoveProductBasket} from "../redux/action/action";
+import CategoryCartBooks from "./card/categoryCartBooks";
+import Slider from "react-slick";
+import BooksCard from "./card/booksCard";
 
 const Basket = () => {
     const {basket: el} = useSelector(s => s)
     console.log(el, "ELEMENT")
     const dispatch = useDispatch()
-
 
     return (
         <div className="min-h-screen bg-indigo-50 py-5">
@@ -40,13 +42,17 @@ const Basket = () => {
                                                             onClick={() => dispatch(DecreaseToBasket(idx))}>-</button>
                                                     </span>
                                                     <button
-                                                        onClick={()=>dispatch(RemoveProductBasket(el.id))}
-                                                        className="bg-gray-50 rounded shadow-lg py-3  text-blue-700  text-md mt-5 ml-48 font-medium">Remove</button>
+                                                        onClick={() => dispatch(RemoveProductBasket(el.id))}
+                                                        className="bg-gray-50 rounded shadow-lg py-3  text-blue-700  text-md mt-5 ml-48 font-medium">Remove
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     ))
                                 }
+                                <div className="bg-gray-900">
+
+                                </div>
                             </div>
                         </div>
                 }

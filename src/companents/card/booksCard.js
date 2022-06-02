@@ -22,7 +22,6 @@ const BooksCard = ({el}) => {
                             <p>{el.price}</p>
                         </div>
                     </div>
-
                     </span>
             </div>
 
