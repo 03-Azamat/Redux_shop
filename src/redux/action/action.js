@@ -1,6 +1,6 @@
 import {api} from "../../API/api";
 import {
-    ADD_TO_BASKET, ADD_TO_FAVORITE,
+    ADD_TO_BASKET,
     DECREASE_QUANTITY,
     GET_SHOP_LIST_CATEGORY,
     GET_SHOP_PRODUCT_DETAIL,
@@ -38,16 +38,12 @@ export const RemoveProductBasket = (item) =>{
     return {type:REMOVE_PRODUCT_BASKET , payload:item}
 }
 
-export const addToFavorite = (item) =>{
-    let favorite = JSON.parse(localStorage.getItem("favorite")) || []
-    favorite = [...favorite , item]
-    localStorage.setItem("favorite", JSON.stringify(favorite))
-    return {type:ADD_TO_FAVORITE , payload:item}
-}
+
+/////////////////////////////////////////////////////
 
 export const getCategoryList = () =>{
     return(dispatch) =>{
-        api.get(`category-list/`)
+        api.get(`categories/`)
             .then(({data})=>{
                 dispatch({type:GET_SHOP_LIST_CATEGORY, payload:data})
             })
@@ -56,7 +52,7 @@ export const getCategoryList = () =>{
 
 export const getProdList = () =>{
     return(dispatch) =>{
-        api.get(`prod-list/`)
+        api.get(`books/`)
             .then(({data})=>{
                 dispatch({type:GET_SHOP_PRODUCT_LIST , payload:data})
             })
@@ -65,7 +61,7 @@ export const getProdList = () =>{
 
 export const getProdDetail = (id) =>{
     return(dispatch) =>{
-        api.get(`prod-detail/${id}/`)
+        api.get(`/books/${id}/`)
             .then(({data})=>{
                 dispatch({type:GET_SHOP_PRODUCT_DETAIL , payload:data})
             })

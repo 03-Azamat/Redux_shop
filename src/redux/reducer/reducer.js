@@ -11,7 +11,6 @@ const initialState = {
     shopProductList: [],
     shopProductDetail: {},
     basket: JSON.parse(localStorage.getItem("basket")) || [],
-    favorite:JSON.parse(localStorage.getItem("favorite")) || []
 }
 
 export const reducer = (state = initialState, action) => {
@@ -45,8 +44,6 @@ export const reducer = (state = initialState, action) => {
         case REMOVE_PRODUCT_BASKET:
             return {...state, basket: state.basket.filter(el => el.id !== action.payload )}
 
-        case ADD_TO_FAVORITE:
-            return {...state, favorite:[...state.favorite , action.payload]}
         default :
             return state
     }

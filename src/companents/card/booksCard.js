@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const Card = ({el}) => {
+const BooksCard = ({el}) => {
 
     return (
         <div className="sm:basis-1  md:basis-1/2 lg:basis-1/3 xl:basis-1/4 my-5 text-center flex justify-center" key={el.id}>
@@ -10,13 +10,13 @@ const Card = ({el}) => {
 
                <div className="w-full">
                    <Link to={`/shop-details/${el.id}`}>
-                       <img src={el.img} alt="image"
+                       <img src={el.image} alt="image"
                             className="w-full h-96 object-cover rounded-md"/>
                    </Link>
                </div>
 
                 <span className="flex flex-col mt-3">
-                        <h4 className="font-head font-medium pb-5 w-60 text-left">{el.name}</h4>
+                        <h4 className="font-head font-medium pb-5 w-60 text-left">{el.title}</h4>
                     <div className="flex justify-between">
                         <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             <p>{el.price}</p>
@@ -30,4 +30,4 @@ const Card = ({el}) => {
     );
 };
 
-export default Card;
+export default BooksCard;
