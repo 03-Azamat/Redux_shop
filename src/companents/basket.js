@@ -1,58 +1,149 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import {addToBasket, DecreaseToBasket, getProdList, RemoveProductBasket} from "../redux/action/action";
-import CategoryCartBooks from "./card/categoryCartBooks";
-import Slider from "react-slick";
-import BooksCard from "./card/booksCard";
+import {addToBasket, DecreaseToBasket, RemoveProductBasket} from "../redux/action/action";
+import {api} from "../API/api";
+import {useForm} from 'react-hook-form';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 const Basket = () => {
     const {basket: el} = useSelector(s => s)
+    const {register, handleSubmit, formState: {errors}} = useForm();
+    const onSubmit = data => {
+        api.post('contact/', data)
+            .then(response => {
+                alert("ok")
+                console.log(response)
+            }).catch(e => {
+            console.log(e)
+            console.log(data)
+        })
+        console.log(data)
+    };
     console.log(el, "ELEMENT")
     const dispatch = useDispatch()
 
     return (
-        <div className="min-h-screen bg-indigo-50 py-5">
-            <div className="w-8/12 mx-auto bg-white shadow-lg border rounded-md ">
+        <div className="min-h-screen">
+            <div className="container mx-auto">
+                <p className="pt-6 pb-16">Главная / Корзина / Оформление заказа</p>
                 {
                     el.length === 0 ? <div>Корзина пусто!!!</div> :
-                        <div>
-                            <div className="w-[80%] mx-auto ">
+                        <div className="flex justify-between">
+                            <div className="bg-white">
+                                <form
+                                    className="flex justify-between min-h-screen"
+                                    onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="w-5/12">
+                                        <h1 className="text-[#010049] text-3xl font-bold font-nunito">Контакные данные</h1>
+                                        <input
+                                            className="border-2 border-[#010049] text-[#010049] rounded w-full py-2 px-3 outline-none my-2"
+                                            type="text" placeholder="Фио*" {...register("fullname", {
+                                            required: true,
+                                            maxLength: 80
+                                        })} />
+                                        <input
+                                            className="mb-32 border-2 border-[#010049] text-[#010049] rounded w-full py-2 px-3 outline-none my-2"
+                                            type="tel" placeholder="Телефон*" {...register("Mobile number", {
+                                            required: true,
+                                            minLength: 6
+                                        })} />
+
+                                        <div className="">
+                                            <h1 className="text-[#010049] text-3xl font-bold font-nunito">Оплата</h1>
+                                            <div className="flex justify-between pb-5">
+                                                <input
+                                                    className="mt-1 mr-3"
+                                                    {...register("payment_method", {required: true})} type="radio"
+                                                    value="Cart"/>
+                                                <p className="text-[#010049] font-nunito text-base">Оплачу наличными при получении заказа</p>
+                                            </div>
+                                            <div className="flex justify-between pb-2">
+                                                <input
+                                                    className="mt-1 mr-3"
+                                                    {...register("payment_method", {required: true})} type="radio"
+                                                    value="Cash"/>
+                                                <p className="text-[#010049] font-nunito text-base">Оплата с банковской картой через <span className="text-green-600">PayBox</span></p>
+                                            </div>
+                                            <input
+                                                type="submit"
+                                                className='bg-[#010049] text-white py-2 w-full'/>
+                                        </div>
+                                    </div>
+
+                                    <div className="w-5/12">
+                                        <h1 className="text-[#010049] text-3xl font-bold font-nunito pb-2">Доставка</h1>
+                                        <p className="text-gray-500 font-nunito pb-2">Выберите удобный способ доставки для этого заказа.</p>
+                                        <div className="flex pb-5">
+                                            <input
+                                                className="mt-1 mr-3"
+                                                {...register("dostavka", {required: true})} type="radio"
+                                                value="Самовывоз"/>
+                                            <p className="text-[#010049] font-nunito text-base">Самовывоз</p>
+                                        </div>
+                                        <div className="flex pb-5">
+                                            <input
+                                                className="mt-1 mr-3"
+                                                {...register("dostavka", {required: true})} type="radio"
+                                                value="Доставка курьером"/>
+                                            <p className="text-[#010049] font-nunito text-base">Доставка курьером</p>
+                                        </div>
+                                        <input
+                                            className="mb-32 border-2 border-[#010049] text-[#010049] rounded w-full h-36 pb-24 px-3 outline-none my-2"
+                                            type="text" placeholder="Область, город (район, село), улица, дом№, кв.№*" {...register("address", {
+                                            required: true,
+                                            minLength: 1
+                                        })} />
+
+                                        <div className="bg-[#010049] py-3 px-5 text-white">
+                                            <div className="flex justify-between">
+                                                <p>Общая сумма</p>
+                                                { el.map(data => Number(+data.price * +data.quantity)) } сом
+                                            </div>
+                                            <p className="text-center pt-5">Оплачено</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <div className="w-5/12">
                                 {
                                     el.map((el, idx) => (
                                         <div className="py-3" key={el.id}>
+                                            <div className="w-full  flex justify-betweentext-white">
+                                                <div className="w-full h-full flex justify-between">
+                                                    <div className="w-7/12 h-72 mr-2">
+                                                        <img src={el.image} alt="image"
+                                                             className="w-full h-72 object-cover rounded-md"/>
+                                                    </div>
 
-                                            <hr className=" border-1 rounded mb-3"/>
-
-                                            <div className="w-full  flex justify-between pt-5">
-                                                <div className="w-[50%] flex justify-between ">
-                                                    <img src={el.img} alt="image"
-                                                         className="w-6/12 h-72 mr-2 object-cover rounded-md"/>
-                                                    <p className="text-md pt-20 font-medium ">{el.name}</p>
-                                                </div>
-                                                <div className="flex flex-col w-[50%] text-right pr-10">
-                                                    <p className="text-md pt-20 pr-16  font-medium">${el.price * el.quantity}</p>
-                                                    <span className="text-md pt-5  font-medium">
+                                                    <div className="flex flex-col justify-around w-full">
+                                                        <p className="text-[#010049] text-2xl font-nunito ">{el.title}</p>
+                                                        <p className="text-[#010049] text-2xl font-nunito ">${el.price * el.quantity}</p>
+                                                        <span className="border border-[#010049] w-24 flex justify-between">
                                                     <button
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                                        className="bg-[#010049] px-2 text-white"
                                                         onClick={() => dispatch(addToBasket(el))}>+</button>
-                                                    Количество : {el.quantity}
-                                                        <button
-                                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                                            onClick={() => dispatch(DecreaseToBasket(idx))}>-</button>
+                                                            <span className="text-[#010049]">{el.quantity}</span>
+                                                            {
+                                                                el.quantity === 1 ? <button
+                                                                        className="bg-[#010049] text-white px-2">-</button> :
+                                                                    <button
+                                                                        className="bg-[#010049] text-white px-2"
+                                                                        onClick={() => dispatch(DecreaseToBasket(idx))}>-</button>
+                                                            }
                                                     </span>
-                                                    <button
-                                                        onClick={() => dispatch(RemoveProductBasket(el.id))}
-                                                        className="bg-gray-50 rounded shadow-lg py-3  text-blue-700  text-md mt-5 ml-48 font-medium">Remove
-                                                    </button>
+                                                        <button
+                                                            onClick={() => dispatch(RemoveProductBasket(el.id))}
+                                                            className="text-left text-[#010049] text-sm font-bold font-nunito py-2">Удалить<FontAwesomeIcon className="bg-gray-400 rounded ml-2 py-1 px-1" icon={faTrashCan}/>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     ))
                                 }
-                                <div className="bg-gray-900">
-
-                                </div>
                             </div>
                         </div>
                 }

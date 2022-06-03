@@ -2,10 +2,9 @@ import React, {useEffect} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addToBasket, getCategoryList, getProdDetail, getProdList} from "../redux/action/action";
-import {faBagShopping, faCheck, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {faBagShopping, faCheck} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import BooksCard from "./card/booksCard";
-import CategoryCartBooks from "./card/categoryCartBooks";
 import Slider from "react-slick";
 
 const ShopDetails = () => {
@@ -14,9 +13,6 @@ const ShopDetails = () => {
     const {shopProductDetail: prodDetail} = useSelector(s => s)
     const {shopProductList: product} = useSelector(s => s)
     const {shopListCategory: category} = useSelector(s => s)
-    const {basket: el} = useSelector(s => s)
-    category.some(el => el.id === prodDetail.category ? console.log(el.title): "aa" )
-    console.log(el)
 
     const {basket} = useSelector(s => s)
     const basketItems = basket.some(basket => basket.id === prodDetail.id)
@@ -26,7 +22,6 @@ const ShopDetails = () => {
         dispatch(getProdDetail(id))
         dispatch(getProdList())
     }, [])
-
 
     const categorySettings = {
         dots: true,
@@ -63,40 +58,41 @@ const ShopDetails = () => {
         ]
     };
 
-
-
     return (
         <div className="container mx-auto">
             <div className="flex flex-row mt-9 pb-20">
                 <div className="basis-1/4">
                     <img src={prodDetail.image}
-                         className="w-96 h-[100%] object-cover rounded-md "/>
+                         className="w-96 h-[100%] object-cover rounded-md " alt="images"/>
                 </div>
                 <div className="basis-1/2 text-left ml-10">
-                    <p className="w-full">{prodDetail.description}</p>
-                    <h1 className="text-3xl font-medium w-9/12">{prodDetail.title}</h1>
-                    <p className="text-xl font-medium w-9/12">{prodDetail.price} сом</p>
-                    <div className="flex ">
+                    <h1 className="text-4xl font-medium w-9/12 font-nunito text-[#010049]">{prodDetail.title}</h1>
+                    <p className="text-2xl font-bold w-9/12 font-nunito text-[#010049]">{prodDetail.price} сом</p>
+                    <div className="flex font-nunito sm:text-center md:text-center lg:text-left xl:text-left text-xl w-full py-5 font-medium text-gray-500">
                         Жанры : {category.map(el => (
-                        <p className="ml-5">{el.id === prodDetail.category ? el.title : ""}</p>))}
+                        <p className="ml-1">{el.id === prodDetail.category ? el.title : ""}</p>))}
                     </div>
-                    <div className="flex flex-col w-80">
+                    <div className="font-nunito sm:text-center md:text-center lg:text-left xl:text-left text-xl w-full py-5 font-medium text-gray-500">
+                        <p>Описание</p>
+                        <p className="w-full text-[#010049] sm:text-center md:text-center lg:text-left xl:text-left text-sm w-full py-2 font-medium text-gray-500">{prodDetail.description}</p>
+                    </div>
+                    <div className="flex flex-col w-64">
                         {
                             basketItems ? <button
-                                className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4">
-                                <FontAwesomeIcon icon={faCheck}/>Добавлено</button> : <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 "
+                                className="border-2 border-[#010049] text-[#010049] hover:bg-[#010049] hover:text-white font-bold py-2 px-4 rounded my-4">
+                                Добавлено</button> : <button
+                                className="border-2 border-[#010049] text-[#010049] hover:bg-[#010049] hover:text-white font-bold py-2 px-4 rounded my-4 "
                                 onClick={() => dispatch(addToBasket(prodDetail))}
-                            ><FontAwesomeIcon icon={faBagShopping}/> добавить в корзину</button>
+                            >добавить в корзину</button>
                         }
-                        <button className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4"
+                        <button className="border-2 border-[#010049] text-[#010049] hover:bg-[#010049] hover:text-white font-bold py-2 px-4 rounded my-4"
                         >Купить сейчас</button>
                     </div>
                 </div>
             </div>
 
-            <h1 className="sm:text-center md:text-center lg:text-left xl:text-left text-3xl w-full text-black py-5 font-bold">Возможно, Вам понравится</h1>
-
+            <h1 className="font-nunito pl-4 sm:text-center md:text-center lg:text-left xl:text-left text-3xl w-full text-black py-5 font-bold text-[#010049]">Возможно,
+                Вам понравится</h1>
             <Slider
                 {...categorySettings}>
                 {

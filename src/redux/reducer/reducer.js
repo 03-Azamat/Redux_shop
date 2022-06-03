@@ -1,6 +1,6 @@
 import {
-    ADD_TO_BASKET, ADD_TO_FAVORITE,
-    DECREASE_QUANTITY,
+    ADD_TO_BASKET,
+    DECREASE_QUANTITY, GET_SHOP_CATEGORY,
     GET_SHOP_LIST_CATEGORY,
     GET_SHOP_PRODUCT_DETAIL,
     GET_SHOP_PRODUCT_LIST, REMOVE_PRODUCT_BASKET
@@ -9,7 +9,8 @@ import {
 const initialState = {
     shopListCategory: [],
     shopProductList: [],
-    shopProductDetail: {},
+    shopIdCategory: [],
+    shopProductDetail: [],
     basket: JSON.parse(localStorage.getItem("basket")) || [],
 }
 
@@ -17,6 +18,8 @@ export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SHOP_LIST_CATEGORY:
             return {...state, shopListCategory: action.payload}
+        case GET_SHOP_CATEGORY:
+            return {...state, shopIdCategory: action.payload}
         case GET_SHOP_PRODUCT_LIST:
             return {...state, shopProductList: action.payload}
         case GET_SHOP_PRODUCT_DETAIL:
@@ -32,7 +35,6 @@ export const reducer = (state = initialState, action) => {
                 }
             }
             return {...state, basket: [...state.basket, {...action.payload, quantity: 1}]}
-
         case DECREASE_QUANTITY:
             if (state.basket[action.payload].quantity > 1){
                 return {
@@ -43,7 +45,6 @@ export const reducer = (state = initialState, action) => {
             } return
         case REMOVE_PRODUCT_BASKET:
             return {...state, basket: state.basket.filter(el => el.id !== action.payload )}
-
         default :
             return state
     }

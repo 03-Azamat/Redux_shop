@@ -1,5 +1,12 @@
 import {api} from "../../API/api";
-import { ADD_TO_BASKET, DECREASE_QUANTITY, GET_SHOP_LIST_CATEGORY, GET_SHOP_PRODUCT_DETAIL, GET_SHOP_PRODUCT_LIST, REMOVE_PRODUCT_BASKET} from "../type/type";
+import {
+    ADD_TO_BASKET,
+    DECREASE_QUANTITY, GET_SHOP_CATEGORY,
+    GET_SHOP_LIST_CATEGORY,
+    GET_SHOP_PRODUCT_DETAIL,
+    GET_SHOP_PRODUCT_LIST,
+    REMOVE_PRODUCT_BASKET
+} from "../type/type";
 
 export const addToBasket = (item) =>{
     let basket = JSON.parse(localStorage.getItem("basket")) || []
@@ -32,6 +39,7 @@ export const RemoveProductBasket = (item) =>{
     return {type:REMOVE_PRODUCT_BASKET , payload:item}
 }
 
+
 /////////////////////////////////////////////////////
 
 export const getCategoryList = () =>{
@@ -39,6 +47,15 @@ export const getCategoryList = () =>{
         api.get(`categories/`)
             .then(({data})=>{
                 dispatch({type:GET_SHOP_LIST_CATEGORY, payload:data})
+            })
+    }
+}
+
+export const getCategory = (id) =>{
+    return(dispatch) =>{
+        api.get(`categories/${id}`)
+            .then(({data})=>{
+                dispatch({type:GET_SHOP_CATEGORY, payload:data})
             })
     }
 }
@@ -54,7 +71,7 @@ export const getProdList = () =>{
 
 export const getProdDetail = (id) =>{
     return(dispatch) =>{
-        api.get(`books/${id}/`)
+        api.get(`books/${id}`)
             .then(({data})=>{
                 dispatch({type:GET_SHOP_PRODUCT_DETAIL , payload:data})
             })

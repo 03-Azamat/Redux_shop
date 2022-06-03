@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import CategoryImg from "./../../img/cate.png"
 
-const CategoryCartBooks = ({el}) => {
+const CategoryCart = ({el}) => {
 
     return (
 
@@ -25,4 +25,4 @@ const CategoryCartBooks = ({el}) => {
     );
 };
 
-export default CategoryCartBooks;
+export default CategoryCart;

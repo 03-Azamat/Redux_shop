@@ -1,27 +1,47 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Footer = () => {
     return (
-        <footer
-            className="p-4 bg-slate-400  shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
-    <span className="text-sm text-white sm:text-center dark:text-white">© 2022 <a href="https://flowbite.com" className="hover:underline">Flowbite™</a>. All Rights Reserved.
-    </span>
-            <ul className="flex flex-wrap items-center mt-3 text-sm text-white dark:text-white sm:mt-0">
-                <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
-                </li>
-                <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-                </li>
-                <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6">Licensing</a>
-                </li>
-                <li>
-                    <a href="#" className="hover:underline">Contact</a>
-                </li>
-            </ul>
-        </footer>
+        <div className="bg-[#010049]">
+            <div className="container mx-auto flex justify-between">
+                <div className="flex flex-col">
+                    <Link to={"/"} className="mt-16 text-white font-medium text-2xl">BOOKShop</Link>
+                </div>
+                <div className="flex flex-col py-6">
+                    <Link to={"/"} className=" py-2 text-white font-medium ">Способ оплаты</Link>
+                    <Link to={"/"} className=" py-2 text-white font-medium ">Условия доставки</Link>
+                    <Link to={"/"} className=" py-2 text-white font-medium ">Правила покупки</Link>
+                </div>
+                <div className="flex flex-col py-6">
+                    <Link to={"/"} className=" py-2 text-white font-medium ">FAQ</Link>
+                    <Link to={"/"} className=" py-2 text-white font-medium ">О нас</Link>
+                </div>
+                <div className="flex flex-col py-6">
+                    <h3 className=" py-2 text-white font-medium ">Связаться с нами:</h3>
+                    <h3 className=" py-2 text-white font-medium ">+996 222 533 735</h3>
+                    <h3 className=" py-2 text-white font-medium ">+996 222 533 735</h3>
+                    <h3 className=" py-2 text-white font-medium ">+996 222 533 735</h3>
+                    <div className="flex ">
+                        {/*<a href="#" className="px-1"><FontAwesomeIcon icon={"instagram"}/></a>*/}
+                        {/*<a href="#" className="px-1"><FontAwesomeIcon icon={"instagram"}/></a>*/}
+                        {/*<a href="#" className="px-1"><FontAwesomeIcon icon={"instagram"}/></a>*/}
+                        {/*<a href="#" className="px-1"><FontAwesomeIcon icon={"instagram"}/></a>*/}
+                    </div>
+                </div>
+                <div className="py-6">
+                    <h1 className="py-2 text-white font-medium text-center">Адрес</h1>
+                    <p className="py-2 text-white font-normal">
+                        Lorem ipsum dolor sit amet, consectetur <br/>
+                        adipiscing elit. Varius in dolor viverra feugiat <br/>
+                        neque, sed in. Mattis volutpat malesuada <br/>
+                        velit parturient aliquam, est. Mauris vitae velit <br/>
+                        laoreet faucibus nec amet velit.
+                    </p>
+                </div>
+            </div>
+        </div>
     );
 };
-
 export default Footer;
